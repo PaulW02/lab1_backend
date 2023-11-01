@@ -24,6 +24,29 @@ public class Patient {
     private List<Encounter> encounters;
 
 
+    public Patient(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    public Patient(Long id, String firstName, String lastName, int age) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    public Patient(Long id, String firstName, String lastName, int age, List<Condition> conditions, List<Observation> observations, List<Encounter> encounters) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.conditions = conditions;
+        this.observations = observations;
+        this.encounters = encounters;
+    }
+
     public Long getId() {
         return id;
     }
