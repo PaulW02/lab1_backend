@@ -7,14 +7,26 @@ import jakarta.persistence.*;
 @Table(name = "observations")
 public class Observation
 {
-
     private Long id;
-    private String observationDetails;
-    // Lägg till andra attribut som är relevanta för observationen
-
+    private String type;
+    private double value;
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient; // Relation till Patient-entiteten
+
+    public Observation(Long id, String type, double value, Patient patient) {
+        this.id = id;
+        this.type = type;
+        this.value = value;
+        this.patient = patient;
+    }
+
+    public Observation(String type, double value, Patient patient) {
+        this.type = type;
+        this.value = value;
+        this.patient = patient;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -24,12 +36,12 @@ public class Observation
         return id;
     }
 
-    public String getObservationDetails() {
-        return observationDetails;
+    public String getType() {
+        return type;
     }
 
-    public void setObservationDetails(String observationDetails) {
-        this.observationDetails = observationDetails;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Patient getPatient() {
@@ -38,5 +50,12 @@ public class Observation
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public double getValue() {
+        return value;
+    }
+    public void setValue(double value) {
+        this.value = value;
     }
 }
