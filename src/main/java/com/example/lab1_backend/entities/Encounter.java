@@ -18,6 +18,24 @@ public class Encounter {
     @JoinColumn(name = "patient_id")
     private Patient patient; // Relation till Patient-entiteten
 
+
+    public Encounter(Date visitDate, String encounterDetails, Patient patient) {
+        this.visitDate = visitDate;
+        this.encounterDetails = encounterDetails;
+        this.patient = patient;
+    }
+
+    public Encounter(Long id, Date visitDate, String encounterDetails, Patient patient) {
+        this.id = id;
+        this.visitDate = visitDate;
+        this.encounterDetails = encounterDetails;
+        this.patient = patient;
+    }
+
+    public Encounter() {
+
+    }
+
     public Long getId() {
         return id;
     }
