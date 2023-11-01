@@ -34,11 +34,11 @@ public class EncounterController {
     }
 
 
-    @GetMapping("/patient/{patientId}")
+   /* @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<Encounter>> getPatientEncounters(@PathVariable Long patientId) {
         List<Encounter> patientEncounters = encounterService.getPatientEncounters(patientId);
         return ResponseEntity.ok(patientEncounters);
-    }
+    }*/
 
 
     @PutMapping("/{encounterId}")
