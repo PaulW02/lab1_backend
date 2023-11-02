@@ -1,5 +1,7 @@
 package com.example.lab1_backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ObservationDTO {
     private Long id;
     private String type;

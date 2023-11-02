@@ -14,6 +14,10 @@ public class Patient {
     private String firstName;
     private String lastName;
     private int age;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @OneToMany(mappedBy = "patient")
     private List<Condition> conditions;
 
@@ -45,6 +49,10 @@ public class Patient {
         this.conditions = conditions;
         this.observations = observations;
         this.encounters = encounters;
+    }
+
+    public Patient() {
+
     }
 
     public Long getId() {

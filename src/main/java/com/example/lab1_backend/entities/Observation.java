@@ -27,6 +27,10 @@ public class Observation
         this.patient = patient;
     }
 
+    public Observation() {
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
