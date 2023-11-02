@@ -4,7 +4,7 @@ import com.example.lab1_backend.dtos.ConditionDTO;
 import com.example.lab1_backend.dtos.PatientDTO;
 import com.example.lab1_backend.entities.Condition;
 import com.example.lab1_backend.entities.Patient;
-import com.example.lab1_backend.services.ConditionService;
+import com.example.lab1_backend.services.ConditionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/condition")
 public class ConditionController {
     @Autowired
-    private ConditionService conditionService;
+    private ConditionServiceImpl conditionService;
 
     @GetMapping
     public List<ConditionDTO> getAllConditions() {
