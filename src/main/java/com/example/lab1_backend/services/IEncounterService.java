@@ -16,9 +16,9 @@ public interface IEncounterService
 
     Encounter getEncounter(Long encounterId);
 
-   // List<Encounter> getPatientEncounters(Long patientId);
+   List<Encounter> getPatientEncounters(Long patientId);
 
     Encounter updateEncounter(Long encounterId, Encounter updatedEncounter);
 
-    void deleteEncounter(Long encounterId);
+    boolean deleteEncounter(Long encounterId);
 }

@@ -26,13 +26,11 @@ public class EncounterService implements IEncounterService {
         Optional<Encounter> encounter = encounterRepository.findById(encounterId);
         return encounter.orElse(null);
     }
-    /*
+
     @Override
-    public List<Encounter> getPatientAll(Long patientId) {
-        // Implementera hämtning av alla möten för en specifik patient
-        // Du kan använda encounterRepository för att hämta dessa möten
-        return encounterRepository.findByPatientId(patientId);
-    }*/
+    public List<Encounter> getPatientEncounters(Long patientId) {
+        return encounterRepository.getEncountersByPatientId(patientId);
+    }
 
     @Override
     public Encounter updateEncounter(Long encounterId, Encounter updatedEncounter) {
@@ -46,8 +44,13 @@ public class EncounterService implements IEncounterService {
     }
 
     @Override
-    public void deleteEncounter(Long encounterId) {
-        encounterRepository.deleteById(encounterId);
+    public boolean deleteEncounter(Long encounterId) {
+        Optional<Encounter> encounter = encounterRepository.findById(encounterId);
+        if (encounter.isPresent()) {
+            encounterRepository.deleteById(encounterId);
+            return true;
+        }
+        return false;
     }
 }
 

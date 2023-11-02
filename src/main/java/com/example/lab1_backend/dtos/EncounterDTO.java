@@ -10,11 +10,23 @@ public class EncounterDTO
     private Date visitDate;
     private String encounterDetails;
     private PatientDTO patientDTO;
+
+
     public EncounterDTO(Date visitDate, String encounterDetails, PatientDTO patient) {
         this.visitDate = visitDate;
         this.encounterDetails = encounterDetails;
         this.patientDTO = patient;
     }
+    public PatientDTO getPatientDTO() {
+        return patientDTO;
+    }
+
+    public void setPatientDTO(PatientDTO patientDTO) {
+        this.patientDTO = patientDTO;
+    }
+
+
+
 
     // Getter- och setter-metoder för attributen
 
