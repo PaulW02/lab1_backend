@@ -4,20 +4,21 @@ package com.example.lab1_backend.controllers;
 import com.example.lab1_backend.dtos.EncounterDTO;
 import com.example.lab1_backend.dtos.PatientDTO;
 import com.example.lab1_backend.entities.Patient;
-import com.example.lab1_backend.services.EncounterServiceImpl;
+import com.example.lab1_backend.services.EncounterService;
 import com.example.lab1_backend.entities.Encounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @RestController
 @RequestMapping("/encounter")
 public class EncounterController {
     @Autowired
-    private EncounterServiceImpl encounterService;
-//DUBELL kolla detta
+    private EncounterService encounterService;
+
     @PostMapping("/")
     public ResponseEntity<EncounterDTO> createEncounter(@RequestBody Date visitDate, String encounterDetails, PatientDTO patient) {
         Encounter encounter = encounterService.createEncounter(visitDate,encounterDetails,new Patient(patient.getFirstName(), patient.getLastName(), patient.getAge()));
@@ -25,31 +26,39 @@ public class EncounterController {
         return ResponseEntity.ok(newEncounter);
     }
 
-
     @GetMapping("/{encounterId}")
-    public ResponseEntity<Encounter> getEncounter(@PathVariable Long encounterId) {
+    public ResponseEntity<EncounterDTO> getEncounterbyId(@PathVariable Long encounterId) {
         Encounter encounter = encounterService.getEncounter(encounterId);
-        return ResponseEntity.ok(encounter);
+        EncounterDTO encounterDTO = new EncounterDTO(encounter.getVisitDate(),encounter.getEncounterDetails(),new PatientDTO(encounter.getPatient().getId(),encounter.getPatient().getFirstName(),encounter.getPatient().getLastName(),encounter.getPatient().getAge()));
+        return ResponseEntity.ok(encounterDTO);
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<EncounterDTO>> getPatientEncounters(@PathVariable Long patientId) {
+        List<Encounter> patientEncounters = encounterService.getPatientEncounters(patientId);
+        List<EncounterDTO> returnValue = new ArrayList<>();
+        for (int i = 0; i < patientEncounters.size(); i++)
+        {
+            Date visitDate = patientEncounters.get(i).getVisitDate();
+            String detail = patientEncounters.get(i).getEncounterDetails();
+            Patient p = patientEncounters.get(i).getPatient();
+            PatientDTO patientDTO = new PatientDTO(p.getId(),p.getFirstName(),p.getLastName(),p.getAge());
+            returnValue.add( new  EncounterDTO(visitDate,detail,patientDTO));
+        }
+        return ResponseEntity.ok(returnValue);
     }
 
 
-   /* @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<Encounter>> getPatientEncounters(@PathVariable Long patientId) {
-        List<Encounter> patientEncounters = encounterService.getPatientEncounters(patientId);
-        return ResponseEntity.ok(patientEncounters);
-    }*/
-
-
     @PutMapping("/{encounterId}")
-    public ResponseEntity<Encounter> updateEncounter(@PathVariable Long encounterId, @RequestBody Encounter updatedEncounter) {
-        Encounter updated = encounterService.updateEncounter(encounterId, updatedEncounter);
+    public ResponseEntity<Encounter> updateEncounter(@PathVariable Long encounterId, @RequestBody EncounterDTO updatedEncounter) {
+        Encounter encounter = new Encounter(updatedEncounter.getId(),updatedEncounter.getVisitDate(),updatedEncounter.getEncounterDetails(),new Patient(updatedEncounter.getPatientDTO().getId(),updatedEncounter.getPatientDTO().getFirstName(),updatedEncounter.getPatientDTO().getLastName(),updatedEncounter.getPatientDTO().getAge()));
+        Encounter updated = encounterService.updateEncounter(encounterId, encounter);
         return ResponseEntity.ok(updated);
     }
 
 
     @DeleteMapping("/{encounterId}")
-    public ResponseEntity<Void> deleteEncounter(@PathVariable Long encounterId) {
-        encounterService.deleteEncounter(encounterId);
-        return ResponseEntity.noContent().build();
+    public boolean deleteEncounter(@PathVariable Long encounterId) {
+      return encounterService.deleteEncounter(encounterId);
     }
 }

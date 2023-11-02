@@ -12,13 +12,17 @@ public class Condition
     private Long id;
 
     private String conditionName;
-    // Lägg till andra attribut för medicinskt tillstånd
+
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private Patient patient; // Medicinskt tillstånd hör till en patient
+    private Patient patient;
 
-    // Getter och setters
+    public Condition(Long id, String conditionName, Patient patient) {
+        this.id = id;
+        this.conditionName = conditionName;
+        this.patient = patient;
+    }
 
     public Long getId() {
         return id;

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Service
 public interface EncounterService
 {
     Encounter createEncounter(Date visitDate, String encounterDetails, Patient patient);
