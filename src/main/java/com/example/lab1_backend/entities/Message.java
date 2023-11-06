@@ -2,9 +2,11 @@ package com.example.lab1_backend.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
-@Table(name = "massages")
-public class Massage
+@Table(name = "messages")
+public class Message
 {
 
     @Id
@@ -18,6 +20,27 @@ public class Massage
     @OneToOne
     @JoinColumn(name = "user_id" )
     private User sender;
+
+    private LocalDate date;
+
+    public Message(Long id, User receiver, User sender, LocalDate date) {
+        this.id = id;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.date = date;
+    }
+
+
+    public Message(Long id, User receiver, User sender) {
+        this.id = id;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.date = LocalDate.now();
+    }
+
+    public Message() {
+
+    }
 
     public User getReceiver() {
         return receiver;
@@ -44,7 +67,11 @@ public class Massage
         return id;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
 
-
-
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }
