@@ -18,8 +18,8 @@ public class MessageServiceImpl implements MessageService {
     }
     @Override
     public Message getMessageById(Long id) {
-        Optional<Message> massage = messageRepository.findById(id);
-        return massage.orElse(null);
+        Optional<Message> message = messageRepository.findById(id);
+        return message.orElse(null);
     }
     @Override
     public Message createMessage(Message message) {
@@ -27,8 +27,8 @@ public class MessageServiceImpl implements MessageService {
     }
     @Override
     public Message updateMessage(Long id, Message updatedMessage) {
-        Optional<Message> existingMassage = messageRepository.findById(id);
-        if (existingMassage.isPresent()) {
+        Optional<Message> existingMessage = messageRepository.findById(id);
+        if (existingMessage.isPresent()) {
             updatedMessage.setId(id);
             return messageRepository.save(updatedMessage);
         } else {
@@ -37,8 +37,8 @@ public class MessageServiceImpl implements MessageService {
     }
     @Override
     public boolean deleteMessage(Long id) {
-        Optional<Message> massage = messageRepository.findById(id);
-        if (massage.isPresent()) {
+        Optional<Message> message = messageRepository.findById(id);
+        if (message.isPresent()) {
             messageRepository.deleteById(id);
             return true;
         }

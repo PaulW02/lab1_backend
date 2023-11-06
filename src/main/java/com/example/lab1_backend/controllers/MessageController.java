@@ -28,7 +28,7 @@ public class MessageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MessageDTO> getMassageById(@PathVariable Long id) {
+    public ResponseEntity<MessageDTO> getMessageById(@PathVariable Long id) {
         Message message = messageService.getMessageById(id);
         if (message != null) {
             return ResponseEntity.ok(convertToDTO(message));
@@ -38,14 +38,14 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageDTO> createMassage(@RequestBody MessageDTO messageDTO) {
+    public ResponseEntity<MessageDTO> createMessage(@RequestBody MessageDTO messageDTO) {
         Message message = convertToEntity(messageDTO);
         Message createdMessage = messageService.createMessage(message);
         return ResponseEntity.ok(convertToDTO(createdMessage));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MessageDTO> updateMassage(@PathVariable Long id, @RequestBody MessageDTO updatedMessageDTO) {
+    public ResponseEntity<MessageDTO> updateMessage(@PathVariable Long id, @RequestBody MessageDTO updatedMessageDTO) {
         Message updatedMessage = convertToEntity(updatedMessageDTO);
         Message updated = messageService.updateMessage(id, updatedMessage);
         if (updated != null) {
@@ -56,7 +56,7 @@ public class MessageController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMassage(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
         boolean deleted = messageService.deleteMessage(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
