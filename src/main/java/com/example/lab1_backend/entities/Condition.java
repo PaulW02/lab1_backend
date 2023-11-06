@@ -24,6 +24,10 @@ public class Condition
         this.patient = patient;
     }
 
+    public Condition() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 @Table(name = "observations")
 public class Observation
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
     private double value;
@@ -35,7 +37,7 @@ public class Observation
         this.id = id;
     }
 
-    @Id
+
     public Long getId() {
         return id;
     }
