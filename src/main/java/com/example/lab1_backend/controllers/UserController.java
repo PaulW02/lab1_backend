@@ -5,6 +5,8 @@ import com.example.lab1_backend.entities.User;
 import com.example.lab1_backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -20,6 +22,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam String email, @RequestParam int age, @RequestParam String roles) {
+
         User createdUser = userService.createUser(firstname, lastname, password, email, age, roles);
         return ResponseEntity.ok(UserDTO.fromUser(createdUser));
     }
