@@ -66,13 +66,13 @@ public class MessageController {
     }
 
     private MessageDTO convertToDTO(Message message) {
-        MessageDTO dto = new MessageDTO(message.getId(), message.getReceiver().getId(),message.getSender().getId(),message.getDate());
+        MessageDTO dto = new MessageDTO(message.getId(), message.getReceiver().getId(),message.getSender().getId(),message.getDate(), message.getInfo());
         return dto;
     }
 
     private Message convertToEntity(MessageDTO messageDTO) {
         UserServiceImpl userController = new UserServiceImpl();
-        Message message = new Message(messageDTO.getId(),userController.getUserById(messageDTO.getReceiverId()),userController.getUserById(messageDTO.getSenderId()),messageDTO.getDate());
+        Message message = new Message(messageDTO.getId(),userController.getUserById(messageDTO.getReceiverId()),userController.getUserById(messageDTO.getSenderId()),messageDTO.getDate(),messageDTO.getInfo());
         return message;
     }
 }

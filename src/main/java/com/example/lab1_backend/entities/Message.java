@@ -22,16 +22,17 @@ public class Message
     private User sender;
 
     private LocalDate date;
-
-    public Message(Long id, User receiver, User sender, LocalDate date) {
+    private String info;
+    public Message(Long id, User receiver, User sender, LocalDate date,String info) {
         this.id = id;
         this.receiver = receiver;
         this.sender = sender;
         this.date = date;
+        this.info = info;
     }
 
 
-    public Message(Long id, User receiver, User sender) {
+    public Message(Long id, User receiver, User sender,String info) {
         this.id = id;
         this.receiver = receiver;
         this.sender = sender;
@@ -40,6 +41,15 @@ public class Message
 
     public Message() {
 
+    }
+
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public User getReceiver() {

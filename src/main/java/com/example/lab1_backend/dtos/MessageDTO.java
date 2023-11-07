@@ -10,12 +10,23 @@ public class MessageDTO {
     private Long receiverId;
     private Long senderId;
     private LocalDate date;
+    private String info;
 
-    public MessageDTO(Long id, Long receiverId, Long senderId, LocalDate date) {
+    public MessageDTO(Long id, Long receiverId, Long senderId, LocalDate date,String info) {
         this.id = id;
         this.receiverId = receiverId;
         this.senderId = senderId;
         this.date = date;
+        this.info    = info;
+    }
+
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public LocalDate getDate() {
