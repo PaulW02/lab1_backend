@@ -28,16 +28,18 @@ public class User {
     @Column(nullable = false)
     private int age;
 
-
-    @ElementCollection
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
-    private Set<String> roles;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user")
     private Patient patient;
 
-    public User(String firstName, String lastName, String password, String email, int age, Set<String> roles, Patient patient) {
+    @OneToMany(mappedBy = "sender")
+    private List<Message> messagesSent;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> messagesReceived;
+    @Column(name = "role")
+    private String roles;
+
+    public User(String firstName, String lastName, String password, String email, int age, String roles, Patient patient) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -51,7 +53,7 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String password, String email, int age, Set<String> roles) {
+    public User(String firstName, String lastName, String password, String email, int age, String roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -108,11 +110,11 @@ public class User {
         this.age = age;
     }
 
-    public Set<String> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
@@ -122,5 +124,21 @@ public class User {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public List<Message> getMessagesSent() {
+        return messagesSent;
+    }
+
+    public void setMessagesSent(List<Message> messagesSent) {
+        this.messagesSent = messagesSent;
+    }
+
+    public List<Message> getMessagesReceived() {
+        return messagesReceived;
+    }
+
+    public void setMessagesReceived(List<Message> messagesReceived) {
+        this.messagesReceived = messagesReceived;
     }
 }

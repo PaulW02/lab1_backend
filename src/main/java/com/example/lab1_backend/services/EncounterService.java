@@ -5,6 +5,7 @@ import com.example.lab1_backend.entities.Patient;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 public interface EncounterService
 {
@@ -17,4 +18,6 @@ public interface EncounterService
     Encounter updateEncounter(Long encounterId, Encounter updatedEncounter);
 
     void deleteEncounter(Long encounterId);
+
+    List<Encounter> getPatientEncounters(Long patientId);
 }

@@ -19,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam String email, @RequestParam int age, @RequestParam Set<String> roles) {
+    public ResponseEntity<UserDTO> createUser(@RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam String email, @RequestParam int age, @RequestParam String roles) {
         User createdUser = userService.createUser(firstname, lastname, password, email, age, roles);
         return ResponseEntity.ok(UserDTO.fromUser(createdUser));
     }

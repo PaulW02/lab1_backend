@@ -2,6 +2,7 @@ package com.example.lab1_backend.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,21 +12,26 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
-    private int age;
+
+    @Column(name = "age")
+    private Integer age;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "patient")
-    private List<Condition> conditions;
 
     @OneToMany(mappedBy = "patient")
-    private List<Observation> observations;
+    private List<Condition> conditions = new ArrayList<>();
 
     @OneToMany(mappedBy = "patient")
-    private List<Encounter> encounters;
+    private List<Observation> observations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "patient")
+    private List<Encounter> encounters = new ArrayList<>();
 
 
     public Patient(String firstName, String lastName, int age) {
@@ -79,13 +85,14 @@ public class Patient {
         this.lastName = lastName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
+
     public List<Condition> getConditions() {
         return conditions;
     }
@@ -107,6 +114,14 @@ public class Patient {
 
     public void setEncounters(List<Encounter> encounters) {
         this.encounters = encounters;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

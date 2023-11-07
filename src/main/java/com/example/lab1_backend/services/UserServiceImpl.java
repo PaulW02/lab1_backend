@@ -20,12 +20,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PatientService patientService;
     @Override
-    public User createUser(String firstname, String lastname, String password, String email, int age, Set<String> roles) {
+    public User createUser(String firstname, String lastname, String password, String email, int age, String roles) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         User user;
-        if (firstname != null && lastname != null && password != null && email != null && age > 0 && roles.size() > 0) {
-            if (roles.contains("Patient")) {
+        if (firstname != null && lastname != null && password != null && email != null && age > 0 && roles != null) {
+            if (roles.equals("Patient")) {
                 Patient patient = patientService.createPatient(firstname, lastname, age);
                 user = new User(firstname, lastname, encryptedPassword, email, age, roles, patient);
             } else {

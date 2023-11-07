@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface EncounterRepository extends JpaRepository<Encounter,Long>
-{
-    @Query("SELECT Encounter from Encounter where Patient.id = ?1")
+public interface EncounterRepository extends JpaRepository<Encounter, Long> {
+    @Query("SELECT e FROM Encounter e WHERE e.patient.id = ?1")
     List<Encounter> getEncountersByPatientId(Long id);
 }

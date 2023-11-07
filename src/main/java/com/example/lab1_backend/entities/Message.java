@@ -13,12 +13,12 @@ public class Message
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id", nullable = false)
     private User receiver;
 
-    @OneToOne
-    @JoinColumn(name = "user_id" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id", nullable = false)
     private User sender;
 
     private LocalDate date;

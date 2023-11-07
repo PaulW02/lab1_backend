@@ -14,8 +14,8 @@ public class Encounter {
     private String encounterDetails;
     // Lägg till andra attribut som är relevanta för en träff
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient; // Relation till Patient-entiteten
 
 

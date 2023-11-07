@@ -14,8 +14,8 @@ public class Condition
     private String conditionName;
 
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
     public Condition(Long id, String conditionName, Patient patient) {

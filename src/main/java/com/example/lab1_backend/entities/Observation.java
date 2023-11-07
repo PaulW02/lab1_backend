@@ -12,8 +12,8 @@ public class Observation
     private Long id;
     private String type;
     private double value;
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient; // Relation till Patient-entiteten
 
     public Observation(Long id, String type, double value, Patient patient) {

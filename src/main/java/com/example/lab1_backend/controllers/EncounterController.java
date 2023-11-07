@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/encounter")
@@ -58,7 +59,7 @@ public class EncounterController {
 
 
     @DeleteMapping("/{encounterId}")
-    public boolean deleteEncounter(@PathVariable Long encounterId) {
-      return encounterService.deleteEncounter(encounterId);
+    public void deleteEncounter(@PathVariable Long encounterId) {
+      encounterService.deleteEncounter(encounterId);
     }
 }
