@@ -23,9 +23,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().permitAll() // Allow access to all paths without permission
-                );
+                .csrf().disable()
+                .cors()
+                .and()
+                .authorizeRequests()
+                .anyRequest().permitAll();
         return http.build();
     }
 
