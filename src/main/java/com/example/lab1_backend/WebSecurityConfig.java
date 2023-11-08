@@ -24,18 +24,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home").permitAll()
-                        .requestMatchers("/user/").permitAll() // Allow registration
-                        .requestMatchers("/user/login").permitAll() // Allow login
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login") // Use the relative path to your login page
-                        .permitAll()
-                )
-                .logout((logout) -> logout.permitAll());
-
-
+                        .anyRequest().permitAll() // Allow access to all paths without permission
+                );
         return http.build();
     }
 
@@ -54,13 +44,16 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Change this to match your setup in production.
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Credentials"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true); // Allow cookies and credentials
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.lab1_backend.controllers;
 
+import com.example.lab1_backend.dtos.CreateUserDTO;
 import com.example.lab1_backend.dtos.UserDTO;
 import com.example.lab1_backend.entities.User;
 import com.example.lab1_backend.services.UserService;
@@ -20,15 +21,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam String email, @RequestParam int age, @RequestParam String roles) {
-
-        User createdUser = userService.createUser(firstname, lastname, password, email, age, roles);
+    @PostMapping("/")
+    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO createUserDTO) {
+        User createdUser = userService.createUser(createUserDTO.getFirstName(), createUserDTO.getLastName(), createUserDTO.getPassword(), createUserDTO.getEmail(), createUserDTO.getAge(), createUserDTO.getRoles());
         return ResponseEntity.ok(UserDTO.fromUser(createdUser));
     }
 
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         List<UserDTO> userDTOs = users.stream()
