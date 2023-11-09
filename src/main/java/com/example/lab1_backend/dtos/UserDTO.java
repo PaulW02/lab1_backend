@@ -1,6 +1,10 @@
 package com.example.lab1_backend.dtos;
 
+import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.entities.User;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 public class UserDTO {
 
@@ -8,18 +12,20 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private String roles;
+    private String role;
+    private int age;
 
-    public UserDTO(Long id, String firstName, String lastName, String email, String roles) {
+    public UserDTO(Long id, String firstName, String lastName, String email,String role, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
+        this.age = age;
     }
 
     public static UserDTO fromUser(User user) {
-        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRoles());
+        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),user.getRoles(), user.getAge());
     }
 
     public Long getId() {
@@ -54,11 +60,19 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

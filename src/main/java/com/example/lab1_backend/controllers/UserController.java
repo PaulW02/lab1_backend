@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,6 +35,7 @@ public class UserController {
         List<UserDTO> userDTOs = users.stream()
                 .map(UserDTO::fromUser)
                 .collect(Collectors.toList());
+        System.out.println("REEEEEEEEEEEEEEE" + userDTOs.get(0).getRole());
         return ResponseEntity.ok(userDTOs);
     }
 

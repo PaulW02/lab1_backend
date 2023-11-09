@@ -1,6 +1,7 @@
 package com.example.lab1_backend.controllers;
 
 import com.example.lab1_backend.dtos.PatientDTO;
+import com.example.lab1_backend.dtos.SearchPatientDTO;
 import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,18 @@ public class PatientController {
         boolean deleted = patientService.deletePatient(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/find-patient")
+    public ResponseEntity<PatientDTO> findPatientByFirstNameAndLastName(
+            @RequestParam String firstName,
+            @RequestParam String lastName) {
+        Patient patient = patientService.getPatientByFirstNameAndLastName(firstName, lastName);
+        PatientDTO patientDTO = new PatientDTO(patient.getId(),patient.getFirstName(), patient.getLastName(), patient.getAge());
+        if (patientDTO != null) {
+            return ResponseEntity.ok(patientDTO);
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -11,4 +11,5 @@ public interface PatientService {
     Patient createPatient(String firstName, String lastName, int age);
     Patient updatePatient(Long id, Patient updatedPatient);
     boolean deletePatient(Long id);
+    Patient getPatientByFirstNameAndLastName(String firstName,String lastName);
 }
