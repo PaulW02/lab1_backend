@@ -54,14 +54,17 @@ public class PatientController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/find-patient")
-    public ResponseEntity<PatientDTO> findPatientByFirstNameAndLastName(
+    @GetMapping("/search")
+    public ResponseEntity<List<PatientDTO>> findPatientByFirstNameAndLastName(
             @RequestParam String firstName,
             @RequestParam String lastName) {
-        Patient patient = patientService.getPatientByFirstNameAndLastName(firstName, lastName);
-        PatientDTO patientDTO = new PatientDTO(patient.getId(),patient.getFirstName(), patient.getLastName(), patient.getAge());
-        if (patientDTO != null) {
-            return ResponseEntity.ok(patientDTO);
+        List<Patient> patients = patientService.getPatientByFirstNameAndLastName(firstName, lastName);
+        List<PatientDTO> patientDTOS = new ArrayList<>();
+        for (Patient patient: patients) {
+            patientDTOS.add(new PatientDTO(patient.getId(),patient.getFirstName(), patient.getLastName(), patient.getAge()));
+        }
+        if (patientDTOS != null) {
+            return ResponseEntity.ok(patientDTOS);
         } else {
             return ResponseEntity.notFound().build();
         }

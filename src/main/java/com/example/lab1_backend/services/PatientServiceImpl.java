@@ -47,7 +47,7 @@ public class PatientServiceImpl implements PatientService {
         }
         return false;
     }
-    public Patient getPatientByFirstNameAndLastName(String firstName,String lastName)
+    public List<Patient> getPatientByFirstNameAndLastName(String firstName,String lastName)
     {
         return patientRepository.findByFirstNameAndLastName(firstName,lastName);
     }
