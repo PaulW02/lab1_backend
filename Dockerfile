@@ -10,7 +10,7 @@ ENV HIBERNATE_DIALECT=org.hibernate.dialect.MySQLDialect
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
-EXPOSE 8080
+EXPOSE 5000
 
 # Define the command to run your application when the container starts
 CMD ["java", "-jar", "/home/app/target/lab1_backend.jar"]

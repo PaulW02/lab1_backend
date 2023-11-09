@@ -63,5 +63,18 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public User loginUser(String username, String password) {
+        User user = userRepository.findUserByEmail(username);
+
+        if (user != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
+    }
 }
 

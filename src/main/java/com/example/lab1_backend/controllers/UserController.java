@@ -1,6 +1,7 @@
 package com.example.lab1_backend.controllers;
 
 import com.example.lab1_backend.dtos.CreateUserDTO;
+import com.example.lab1_backend.dtos.UserAuthenticationDTO;
 import com.example.lab1_backend.dtos.UserDTO;
 import com.example.lab1_backend.entities.User;
 import com.example.lab1_backend.services.UserService;
@@ -27,7 +28,6 @@ public class UserController {
         return ResponseEntity.ok(UserDTO.fromUser(createdUser));
     }
 
-
     @GetMapping("/")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = userService.getAllUsers();
@@ -36,6 +36,18 @@ public class UserController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(userDTOs);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserDTO> loginUser(@RequestBody UserAuthenticationDTO userAuthenticationDTO) {
+        if (userAuthenticationDTO.getUsername() != null && userAuthenticationDTO.getPassword() != null) {
+            User loginUser = userService.loginUser(userAuthenticationDTO.getUsername(), userAuthenticationDTO.getPassword());
+            if (loginUser != null) {
+                return ResponseEntity.ok(UserDTO.fromUser(loginUser));
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {

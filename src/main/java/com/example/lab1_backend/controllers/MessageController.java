@@ -40,6 +40,7 @@ public class MessageController {
     @PostMapping
     public ResponseEntity<MessageDTO> createMessage(@RequestBody MessageDTO messageDTO) {
         Message message = convertToEntity(messageDTO);
+
         Message createdMessage = messageService.createMessage(message);
         return ResponseEntity.ok(convertToDTO(createdMessage));
     }
