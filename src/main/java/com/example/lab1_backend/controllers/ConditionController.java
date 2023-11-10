@@ -1,11 +1,16 @@
 package com.example.lab1_backend.controllers;
 
 import com.example.lab1_backend.dtos.ConditionDTO;
+import com.example.lab1_backend.dtos.CreateConditionDTO;
 import com.example.lab1_backend.dtos.PatientDTO;
 import com.example.lab1_backend.entities.Condition;
+import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
+import com.example.lab1_backend.services.ConditionService;
 import com.example.lab1_backend.services.ConditionServiceImpl;
+import com.example.lab1_backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +20,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/condition")
 public class ConditionController {
     @Autowired
-    private ConditionServiceImpl conditionService;
+    private ConditionService conditionService;
+
+    @Autowired
+    private PatientService patientService;
 
     @GetMapping
     public List<ConditionDTO> getAllConditions() {
@@ -31,10 +39,14 @@ public class ConditionController {
         return convertToDTO(condition);
     }
 
-    @PostMapping
-    public Condition createCondition(@RequestBody ConditionDTO conditionDTO) {
-        Condition condition = convertToEntity(conditionDTO);
-        return conditionService.createCondition(condition);
+    @PostMapping("/")
+    public ResponseEntity<ConditionDTO> createCondition(@RequestBody CreateConditionDTO createConditionDTO) {
+        Condition condition = new Condition();
+        condition.setConditionName(createConditionDTO.getCondition());
+        condition.setPatient(patientService.getPatientById(createConditionDTO.getPatientId()));
+        condition = conditionService.createCondition(condition);
+        ConditionDTO conditionDTO = new ConditionDTO(condition.getId(), condition.getConditionName(), new PatientDTO(condition.getPatient().getId(), condition.getPatient().getFirstName(), condition.getPatient().getLastName(), condition.getPatient().getAge()));
+        return ResponseEntity.ok(conditionDTO);
     }
 
     @PutMapping("/{id}")
