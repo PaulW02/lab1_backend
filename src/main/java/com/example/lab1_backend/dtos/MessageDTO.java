@@ -7,15 +7,15 @@ import java.util.Date;
 
 public class MessageDTO {
     private Long id;
-    private Long receiverId;
-    private Long senderId;
+    private UserDTO receiver;
+    private UserDTO sender;
     private LocalDate date;
     private String info;
 
-    public MessageDTO(Long id, Long receiverId, Long senderId, LocalDate date,String info) {
+    public MessageDTO(Long id, UserDTO receiver, UserDTO sender, LocalDate date,String info) {
         this.id = id;
-        this.receiverId = receiverId;
-        this.senderId = senderId;
+        this.receiver = receiver;
+        this.sender = sender;
         this.date = date;
         this.info    = info;
     }
@@ -45,20 +45,20 @@ public class MessageDTO {
         this.id = id;
     }
 
-    public Long getReceiverId() {
-        return receiverId;
+    public UserDTO getReceiver() {
+        return receiver;
     }
 
-    public void setReceiverId(Long receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiver(UserDTO receiver) {
+        this.receiver = receiver;
     }
 
-    public Long getSenderId() {
-        return senderId;
+    public UserDTO getSender() {
+        return sender;
     }
 
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
+    public void setSender(UserDTO sender) {
+        this.sender = sender;
     }
 }
 

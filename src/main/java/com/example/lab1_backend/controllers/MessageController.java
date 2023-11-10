@@ -2,6 +2,7 @@ package com.example.lab1_backend.controllers;
 
 import com.example.lab1_backend.dtos.CreateMessageDTO;
 import com.example.lab1_backend.dtos.MessageDTO;
+import com.example.lab1_backend.dtos.UserDTO;
 import com.example.lab1_backend.entities.Message;
 import com.example.lab1_backend.services.MessageService;
 import com.example.lab1_backend.services.UserService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,6 +35,14 @@ public class MessageController {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(messageDTOS);
+    }
+
+    @GetMapping("/conversations/{userId}")
+    public ResponseEntity<Map<Long, List<MessageDTO>>> getMessagesByUser(@PathVariable Long userId) {
+        if (userId > 0) {
+            return ResponseEntity.ok(messageService.getMessagesByUser(userId));
+        }
+        return null;
     }
 
     @GetMapping("/{id}")
@@ -73,12 +83,12 @@ public class MessageController {
     }
 
     private MessageDTO convertToDTO(Message message) {
-        MessageDTO dto = new MessageDTO(message.getId(), message.getReceiver().getId(),message.getSender().getId(),message.getDate(), message.getInfo());
+        MessageDTO dto = new MessageDTO(message.getId(), UserDTO.fromUser(message.getReceiver()), UserDTO.fromUser(message.getSender()),message.getDate(), message.getInfo());
         return dto;
     }
 
     private Message convertToEntity(MessageDTO messageDTO) {
-        Message message = new Message(messageDTO.getInfo(), messageDTO.getDate(), userService.getUserById(messageDTO.getSenderId()),userService.getUserById(messageDTO.getReceiverId()));
+        Message message = new Message(messageDTO.getInfo(), messageDTO.getDate(), UserDTO.fromUserDTO(messageDTO.getSender()), UserDTO.fromUserDTO(messageDTO.getReceiver()));
         return message;
     }
 

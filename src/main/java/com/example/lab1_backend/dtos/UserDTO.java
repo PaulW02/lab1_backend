@@ -28,6 +28,10 @@ public class UserDTO {
         return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),user.getRoles(), user.getAge());
     }
 
+    public static User fromUserDTO(UserDTO user) {
+        return new User(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getAge(), user.getRole());
+    }
+
     public Long getId() {
         return id;
     }
