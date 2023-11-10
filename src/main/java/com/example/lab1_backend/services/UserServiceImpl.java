@@ -18,20 +18,22 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private PatientService patientService;
+    private PatientRepository patientRepository;
+
     @Override
     public User createUser(String firstname, String lastname, String password, String email, int age, String roles) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         User user;
         if (firstname != null && lastname != null && password != null && email != null && age > 0 && roles != null) {
+            user = new User(firstname, lastname, encryptedPassword, email, age, roles);
+            user = userRepository.save(user);
             if (roles.equals("Patient")) {
-                Patient patient = patientService.createPatient(firstname, lastname, age);
-                user = new User(firstname, lastname, encryptedPassword, email, age, roles, patient);
-            } else {
-                user = new User(firstname, lastname, encryptedPassword, email, age, roles);
+                Patient patient = new Patient(firstname, lastname, age);
+                patient.setUser(user);
+                patientRepository.save(patient);
             }
-            return userRepository.save(user);
+            return user;
         }
         return null;
     }
@@ -75,6 +77,21 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<User> getAllPatients() {
+        return userRepository.findAllPatients();
+    }
+
+    @Override
+    public List<User> getAllDoctors() {
+        return userRepository.findAllDoctors();
+    }
+
+    @Override
+    public List<User> getAllEmployees() {
+        return userRepository.findAllEmployees();
     }
 }
 

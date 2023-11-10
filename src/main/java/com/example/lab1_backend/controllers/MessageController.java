@@ -1,22 +1,30 @@
 package com.example.lab1_backend.controllers;
 
+import com.example.lab1_backend.dtos.CreateMessageDTO;
 import com.example.lab1_backend.dtos.MessageDTO;
 import com.example.lab1_backend.entities.Message;
 import com.example.lab1_backend.services.MessageService;
+import com.example.lab1_backend.services.UserService;
 import com.example.lab1_backend.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/message")
 public class MessageController {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping
     public ResponseEntity<List<MessageDTO>> getAllMessages() {
@@ -37,11 +45,9 @@ public class MessageController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<MessageDTO> createMessage(@RequestBody MessageDTO messageDTO) {
-        Message message = convertToEntity(messageDTO);
-
-        Message createdMessage = messageService.createMessage(message);
+    @PostMapping("/")
+    public ResponseEntity<MessageDTO> createMessage(@RequestBody CreateMessageDTO createMessageDTO) {
+        Message createdMessage = messageService.createMessage(createMessageDTO.getInfo(), LocalDate.now(), createMessageDTO.getSenderId(), createMessageDTO.getReceiverId());
         return ResponseEntity.ok(convertToDTO(createdMessage));
     }
 
@@ -72,8 +78,8 @@ public class MessageController {
     }
 
     private Message convertToEntity(MessageDTO messageDTO) {
-        UserServiceImpl userController = new UserServiceImpl();
-        Message message = new Message(messageDTO.getId(),userController.getUserById(messageDTO.getReceiverId()),userController.getUserById(messageDTO.getSenderId()),messageDTO.getDate(),messageDTO.getInfo());
+        Message message = new Message(messageDTO.getInfo(), messageDTO.getDate(), userService.getUserById(messageDTO.getSenderId()),userService.getUserById(messageDTO.getReceiverId()));
         return message;
     }
+
 }

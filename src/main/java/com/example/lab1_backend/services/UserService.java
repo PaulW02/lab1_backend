@@ -14,4 +14,10 @@ public interface UserService {
     boolean deleteUser(Long id);
 
     User loginUser(String username, String password);
+
+    List<User> getAllPatients();
+
+    List<User> getAllDoctors();
+
+    List<User> getAllEmployees();
 }

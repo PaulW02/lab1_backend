@@ -35,7 +35,33 @@ public class UserController {
         List<UserDTO> userDTOs = users.stream()
                 .map(UserDTO::fromUser)
                 .collect(Collectors.toList());
-        System.out.println("REEEEEEEEEEEEEEE" + userDTOs.get(0).getRole());
+        return ResponseEntity.ok(userDTOs);
+    }
+
+    @GetMapping("/patients")
+    public ResponseEntity<List<UserDTO>> getAllPatients() {
+        List<User> users = userService.getAllPatients();
+        List<UserDTO> userDTOs = users.stream()
+                .map(UserDTO::fromUser)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
+    }
+
+    @GetMapping("/doctors")
+    public ResponseEntity<List<UserDTO>> getAllDoctors() {
+        List<User> users = userService.getAllDoctors();
+        List<UserDTO> userDTOs = users.stream()
+                .map(UserDTO::fromUser)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
+    }
+
+    @GetMapping("/employees")
+    public ResponseEntity<List<UserDTO>> getAllEmployees() {
+        List<User> users = userService.getAllEmployees();
+        List<UserDTO> userDTOs = users.stream()
+                .map(UserDTO::fromUser)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(userDTOs);
     }
 

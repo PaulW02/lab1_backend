@@ -43,6 +43,13 @@ public class Message
 
     }
 
+    public Message(String info, LocalDate date, User sender, User receiver) {
+        this.info = info;
+        this.date = date;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
 
     public String getInfo() {
         return info;

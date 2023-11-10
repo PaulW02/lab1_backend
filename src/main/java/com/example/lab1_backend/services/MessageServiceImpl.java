@@ -1,10 +1,13 @@
 package com.example.lab1_backend.services;
 
 import com.example.lab1_backend.entities.Message;
+import com.example.lab1_backend.entities.User;
 import com.example.lab1_backend.repositories.MessageRepository;
+import com.example.lab1_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +15,9 @@ import java.util.Optional;
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository messageRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
@@ -22,9 +28,14 @@ public class MessageServiceImpl implements MessageService {
         return message.orElse(null);
     }
     @Override
-    public Message createMessage(Message message) {
-        
-        return messageRepository.save(message);
+    public Message createMessage(String info, LocalDate date, Long senderId, Long receiverId) {
+        if (info != null && date != null && senderId != null && receiverId != null) {
+            Optional<User> sender = userRepository.findById(senderId);
+            Optional<User> receiver = userRepository.findById(receiverId);
+            Message createdMessage = new Message(info, date, sender.get(), receiver.get());
+            return messageRepository.save(createdMessage);
+        }
+        return null;
     }
     @Override
     public Message updateMessage(Long id, Message updatedMessage) {
@@ -47,5 +58,7 @@ public class MessageServiceImpl implements MessageService {
         }
         return false;
     }
+
+
 }
 
