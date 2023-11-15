@@ -20,10 +20,14 @@ public class PatientController {
     private PatientService patientService;
 
     // Define your REST endpoints
-    @GetMapping
-    public List<PatientDTO> getAllPatients() {
+    @GetMapping("/")
+    public ResponseEntity<List<PatientDTO>> getAllPatients() {
         List<Patient> patients = patientService.getAllPatients();
-        return new ArrayList<>();
+        List<PatientDTO> patientDTOS = new ArrayList<>();
+        for (Patient patient: patients) {
+            patientDTOS.add(new PatientDTO(patient.getId(), patient.getFirstName(), patient.getLastName(), patient.getAge()));
+        }
+        return ResponseEntity.ok(patientDTOS);
     }
 
     @GetMapping("/{id}")
