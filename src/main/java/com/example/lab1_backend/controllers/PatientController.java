@@ -1,7 +1,6 @@
 package com.example.lab1_backend.controllers;
 
-import com.example.lab1_backend.dtos.PatientDTO;
-import com.example.lab1_backend.dtos.SearchPatientDTO;
+import com.example.lab1_backend.dtos.*;
 import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +53,13 @@ public class PatientController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<PatientDetailsDTO> getPatientByUserId(@PathVariable Long id)
+    {
+       Patient p =  patientService.getPatientByUserId(id);
+       return  getPatientDetails(p.getId());
+    }
     @GetMapping("/search")
     public ResponseEntity<List<PatientDTO>> findPatientByFirstNameAndLastName(
             @RequestParam String firstName,
@@ -69,4 +75,17 @@ public class PatientController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<PatientDetailsDTO> getPatientDetails(@PathVariable Long id) {
+
+        PatientDetailsDTO patientDetails = patientService.getPatientDetailsById(id);
+        if (patientDetails != null) {
+            return ResponseEntity.ok(patientDetails);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

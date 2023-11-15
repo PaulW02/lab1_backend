@@ -1,6 +1,7 @@
 package com.example.lab1_backend.services;
 
 import com.example.lab1_backend.entities.Encounter;
+import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.repositories.EncounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,16 @@ public class EncounterServiceImpl implements EncounterService {
         encounterRepository.deleteById(encounterId);
     }
 
+
+
     @Override
     public List<Encounter> getPatientEncounters(Long patientId) {
         return null;
     }
+
+
+
+
 }
 
 

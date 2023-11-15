@@ -54,7 +54,7 @@ public class ObservationController {
         return dto;
     }
 
-    private Observation convertToEntity(ObservationDTO observationDTO) {
+     static Observation convertToEntity(ObservationDTO observationDTO) {
         Observation observation = new Observation(observationDTO.getId(), observationDTO.getType(), observationDTO.getValue(), new Patient(observationDTO.getPatientDTO().getId(), observationDTO.getPatientDTO().getFirstName(), observationDTO.getPatientDTO().getLastName(), observationDTO.getPatientDTO().getAge()));
         return observation;
     }

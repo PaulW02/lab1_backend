@@ -9,7 +9,14 @@ import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient, Long>
 {
+
+
      @Query("SELECT e FROM Patient e WHERE e.firstName = :firstName AND e.lastName = :lastName")
      List<Patient> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+
+
+     @Query("SELECT e FROM Patient e WHERE e.user.id = ?1")
+     Patient getPatientByUserId(long id);
+
 
 }

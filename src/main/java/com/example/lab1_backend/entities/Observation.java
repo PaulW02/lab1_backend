@@ -16,6 +16,10 @@ public class Observation
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient; // Relation till Patient-entiteten
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "encounter_id", nullable = false)
+    private Encounter encounter;
     public Observation(Long id, String type, double value, Patient patient) {
         this.id = id;
         this.type = type;
