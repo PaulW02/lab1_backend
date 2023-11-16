@@ -1,8 +1,10 @@
 package com.example.lab1_backend.dtos;
 
+import com.example.lab1_backend.entities.Encounter;
 import com.example.lab1_backend.entities.Patient;
 
 import java.util.Date;
+import java.util.List;
 
 public class EncounterDTO
 {
@@ -11,11 +13,27 @@ public class EncounterDTO
     private String encounterDetails;
     private PatientDTO patientDTO;
 
+    private List<ObservationDTO> observations;
+
+
+    public EncounterDTO()
+    {
+
+    }
 
     public EncounterDTO(Date visitDate, String encounterDetails, PatientDTO patient) {
         this.visitDate = visitDate;
         this.encounterDetails = encounterDetails;
         this.patientDTO = patient;
+    }
+
+    public static EncounterDTO fromEntity(Encounter entity) {
+        EncounterDTO dto = new EncounterDTO();
+        dto.setId(entity.getId());
+        dto.setVisitDate(entity.getVisitDate());
+        dto.setEncounterDetails(entity.getEncounterDetails());
+        // Set other fields as needed
+        return dto;
     }
     public PatientDTO getPatientDTO() {
         return patientDTO;

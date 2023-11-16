@@ -2,7 +2,9 @@ package com.example.lab1_backend.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "encounters")
@@ -13,6 +15,12 @@ public class Encounter {
     private Date visitDate;
     private String encounterDetails;
     // Lägg till andra attribut som är relevanta för en träff
+
+
+    @OneToMany(mappedBy = "encounter")
+    private List<Observation> observations = new ArrayList<>();
+
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", nullable = false)
@@ -34,6 +42,15 @@ public class Encounter {
 
     public Encounter() {
 
+    }
+
+
+    public List<Observation> getObservations() {
+        return observations;
+    }
+
+    public void setObservations(ArrayList<Observation> observations) {
+        this.observations = observations;
     }
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package com.example.lab1_backend.dtos;
 
+import com.example.lab1_backend.entities.Condition;
 import com.example.lab1_backend.entities.Patient;
 
 
@@ -9,10 +10,14 @@ public class ConditionDTO
     private String conditionName;
     private PatientDTO patient;
 
+    public ConditionDTO() {
+    }
+
     public ConditionDTO(String conditionName, PatientDTO patient) {
         this.conditionName = conditionName;
         this.patient = patient;
     }
+
 
     public ConditionDTO(Long id, String conditionName, PatientDTO patient) {
         this.id = id;
@@ -24,7 +29,9 @@ public class ConditionDTO
         return id;
     }
 
-
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getConditionName() {
         return conditionName;
@@ -40,5 +47,11 @@ public class ConditionDTO
 
     public void setPatient(PatientDTO patient) {
         this.patient = patient;
+    }
+    public static ConditionDTO fromEntity(Condition entity) {
+        ConditionDTO dto = new ConditionDTO();
+        dto.setId(entity.getId());
+        dto.setConditionName(entity.getConditionName());
+        return dto;
     }
 }

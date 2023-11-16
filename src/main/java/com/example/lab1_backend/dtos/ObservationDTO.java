@@ -1,5 +1,6 @@
 package com.example.lab1_backend.dtos;
 
+import com.example.lab1_backend.entities.Observation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ObservationDTO {
@@ -12,6 +13,18 @@ public class ObservationDTO {
         this.type = type;
         this.value = value;
         this.patientDTO = patientDTO;
+    }
+
+    public ObservationDTO() {
+    }
+
+    public static ObservationDTO fromEntity(Observation entity) {
+        ObservationDTO dto = new ObservationDTO();
+        dto.setId(entity.getId());
+        dto.setType(entity.getType());
+        dto.setValue(entity.getValue());
+        // Set other fields as needed
+        return dto;
     }
 
     public Long getId() {

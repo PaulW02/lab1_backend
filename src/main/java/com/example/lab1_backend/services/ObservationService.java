@@ -11,5 +11,7 @@ public interface ObservationService {
     Observation createObservation(Observation observation);
     Observation updateObservation(Long id, Observation updatedObservation);
     boolean deleteObservation(Long id);
+    List<Observation> getObservationByEncounterId(Long id);
+
 
 }

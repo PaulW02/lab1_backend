@@ -44,4 +44,9 @@ public class ObservationServiceImpl implements ObservationService {
         }
         return false;
     }
+
+    @Override
+    public List<Observation> getObservationByEncounterId(Long id) {
+        return observationRepository.findByEncounterId(id);
+    }
 }

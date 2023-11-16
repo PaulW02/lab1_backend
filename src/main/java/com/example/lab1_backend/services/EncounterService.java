@@ -1,6 +1,7 @@
 package com.example.lab1_backend.services;
 
 import com.example.lab1_backend.entities.Encounter;
+import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +21,5 @@ public interface EncounterService
     void deleteEncounter(Long encounterId);
 
     List<Encounter> getPatientEncounters(Long patientId);
+
 }

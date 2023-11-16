@@ -2,10 +2,14 @@ package com.example.lab1_backend.controllers;
 
 
 import com.example.lab1_backend.dtos.EncounterDTO;
+import com.example.lab1_backend.dtos.ObservationDTO;
 import com.example.lab1_backend.dtos.PatientDTO;
+import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.services.EncounterService;
 import com.example.lab1_backend.entities.Encounter;
+import com.example.lab1_backend.services.ObservationService;
+import com.example.lab1_backend.services.ObservationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/encounter")
 public class EncounterController {
     @Autowired
     private EncounterService encounterService;
+    @Autowired
+    private ObservationService  observationService;
 
     @PostMapping("/")
     public ResponseEntity<EncounterDTO> createEncounter(@RequestBody Date visitDate, String encounterDetails, PatientDTO patient) {
@@ -27,9 +34,9 @@ public class EncounterController {
         return ResponseEntity.ok(newEncounter);
     }
 
-    @GetMapping("/{encounterId}")
-    public ResponseEntity<EncounterDTO> getEncounterbyId(@PathVariable Long encounterId) {
-        Encounter encounter = encounterService.getEncounter(encounterId);
+    @GetMapping("/{id}")
+    public ResponseEntity<EncounterDTO> getEncounterbyId(@PathVariable Long id) {
+        Encounter encounter = encounterService.getEncounter(id);
         EncounterDTO encounterDTO = new EncounterDTO(encounter.getVisitDate(),encounter.getEncounterDetails(),new PatientDTO(encounter.getPatient().getId(),encounter.getPatient().getFirstName(),encounter.getPatient().getLastName(),encounter.getPatient().getAge()));
         return ResponseEntity.ok(encounterDTO);
     }
@@ -62,4 +69,22 @@ public class EncounterController {
     public void deleteEncounter(@PathVariable Long encounterId) {
       encounterService.deleteEncounter(encounterId);
     }
+
+    @GetMapping("/{id}/observations")
+    public ResponseEntity<List<ObservationDTO>> getObservationDTOByEncounterId(@PathVariable Long id) {
+
+
+        List<Observation> observations = observationService.getObservationByEncounterId(id);
+        List<ObservationDTO> dtos = new ArrayList<>();
+
+        for (int i = 0; i < observations.size(); i++) {
+            PatientDTO patientDTO = new PatientDTO(observations.get(i).getPatient().getId(), observations.get(i).getPatient().getFirstName(), observations.get(i).getPatient().getLastName(), observations.get(i).getPatient().getAge());
+            ObservationDTO dto = new ObservationDTO(observations.get(i).getType(), observations.get(i).getValue(), patientDTO);
+            dtos.add(dto);
+        }
+
+        //dtos.add(new ObservationDTO("cancer",23,new PatientDTO(1,"george","bahadi",)))
+        return ResponseEntity.ok(dtos);
+    }
+
 }
