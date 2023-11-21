@@ -3,27 +3,31 @@ package com.example.lab1_backend.dtos;
 import com.example.lab1_backend.entities.Encounter;
 import com.example.lab1_backend.entities.Patient;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class EncounterDTO
 {
     private Long id;
-    private Date visitDate;
-    private String encounterDetails;
+    private LocalDate visitDate;
     private PatientDTO patientDTO;
 
     private List<ObservationDTO> observations;
-
 
     public EncounterDTO()
     {
 
     }
 
-    public EncounterDTO(Date visitDate, String encounterDetails, PatientDTO patient) {
+    public EncounterDTO(LocalDate visitDate, PatientDTO patient) {
         this.visitDate = visitDate;
-        this.encounterDetails = encounterDetails;
+        this.patientDTO = patient;
+    }
+
+    public EncounterDTO(Long id, LocalDate visitDate, PatientDTO patient) {
+        this.id = id;
+        this.visitDate = visitDate;
         this.patientDTO = patient;
     }
 
@@ -31,7 +35,6 @@ public class EncounterDTO
         EncounterDTO dto = new EncounterDTO();
         dto.setId(entity.getId());
         dto.setVisitDate(entity.getVisitDate());
-        dto.setEncounterDetails(entity.getEncounterDetails());
         // Set other fields as needed
         return dto;
     }
@@ -43,11 +46,6 @@ public class EncounterDTO
         this.patientDTO = patientDTO;
     }
 
-
-
-
-    // Getter- och setter-metoder för attributen
-
     public Long getId() {
         return id;
     }
@@ -56,21 +54,12 @@ public class EncounterDTO
         this.id = id;
     }
 
-    public Date getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(Date visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
-
-    public String getEncounterDetails() {
-        return encounterDetails;
-    }
-
-    public void setEncounterDetails(String encounterDetails) {
-        this.encounterDetails = encounterDetails;
-    }
-
 
 }

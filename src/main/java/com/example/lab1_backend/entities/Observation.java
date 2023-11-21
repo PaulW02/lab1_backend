@@ -33,6 +33,13 @@ public class Observation
         this.patient = patient;
     }
 
+    public Observation(String type, double value, Patient patient, Encounter encounter) {
+        this.type = type;
+        this.value = value;
+        this.patient = patient;
+        this.encounter = encounter;
+    }
+
     public Observation() {
 
     }
@@ -67,5 +74,13 @@ public class Observation
     }
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public Encounter getEncounter() {
+        return encounter;
+    }
+
+    public void setEncounter(Encounter encounter) {
+        this.encounter = encounter;
     }
 }

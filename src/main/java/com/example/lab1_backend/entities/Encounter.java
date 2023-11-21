@@ -2,6 +2,7 @@ package com.example.lab1_backend.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,38 +13,26 @@ public class Encounter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date visitDate;
-    private String encounterDetails;
-    // Lägg till andra attribut som är relevanta för en träff
-
-
+    private LocalDate visitDate;
     @OneToMany(mappedBy = "encounter")
     private List<Observation> observations = new ArrayList<>();
-
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient; // Relation till Patient-entiteten
 
-
-    public Encounter(Date visitDate, String encounterDetails, Patient patient) {
+    public Encounter(LocalDate visitDate, Patient patient) {
         this.visitDate = visitDate;
-        this.encounterDetails = encounterDetails;
         this.patient = patient;
     }
 
-    public Encounter(Long id, Date visitDate, String encounterDetails, Patient patient) {
+    public Encounter(Long id, LocalDate visitDate, Patient patient) {
         this.id = id;
         this.visitDate = visitDate;
-        this.encounterDetails = encounterDetails;
         this.patient = patient;
     }
 
     public Encounter() {
-
     }
-
 
     public List<Observation> getObservations() {
         return observations;
@@ -60,15 +49,6 @@ public class Encounter {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getEncounterDetails() {
-        return encounterDetails;
-    }
-
-    public void setEncounterDetails(String encounterDetails) {
-        this.encounterDetails = encounterDetails;
-    }
-
     public Patient getPatient() {
         return patient;
     }
@@ -77,11 +57,11 @@ public class Encounter {
         this.patient = patient;
     }
 
-    public Date getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(Date visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
 }

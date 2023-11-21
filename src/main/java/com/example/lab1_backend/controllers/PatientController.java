@@ -1,6 +1,9 @@
 package com.example.lab1_backend.controllers;
 
 import com.example.lab1_backend.dtos.*;
+import com.example.lab1_backend.entities.Condition;
+import com.example.lab1_backend.entities.Encounter;
+import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +65,26 @@ public class PatientController {
     public ResponseEntity<PatientDetailsDTO> getPatientByUserId(@PathVariable Long id)
     {
        Patient p =  patientService.getPatientByUserId(id);
-       return  getPatientDetails(p.getId());
+        List<Condition> conditions = p.getConditions();
+        List<Observation> observations = p.getObservations();
+        List<Encounter> encounters = p.getEncounters();
+        List<ConditionDTO> conditionDTOs = new ArrayList<>();
+        for (Condition condition : conditions) {
+            conditionDTOs.add(ConditionDTO.fromEntity(condition));
+        }
+
+        List<ObservationDTO> observationDTOs = new ArrayList<>();
+        for (Observation observation : observations) {
+            observationDTOs.add(ObservationDTO.fromEntity(observation));
+        }
+
+        List<EncounterDTO> encounterDTOs = new ArrayList<>();
+        for (Encounter encounter : encounters) {
+            encounterDTOs.add(EncounterDTO.fromEntity(encounter));
+        }
+       PatientDetailsDTO patientDetailsDTO = new PatientDetailsDTO(p.getId(), conditionDTOs, observationDTOs, encounterDTOs, p.getFirstName(), p.getLastName(), p.getAge());
+
+       return ResponseEntity.ok(patientDetailsDTO);
     }
     @GetMapping("/search")
     public ResponseEntity<List<PatientDTO>> findPatientByFirstNameAndLastName(

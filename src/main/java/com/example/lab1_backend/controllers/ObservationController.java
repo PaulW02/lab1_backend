@@ -5,6 +5,7 @@ import com.example.lab1_backend.dtos.ObservationDTO;
 import com.example.lab1_backend.dtos.PatientDTO;
 import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
+import com.example.lab1_backend.services.EncounterService;
 import com.example.lab1_backend.services.ObservationService;
 import com.example.lab1_backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 public class ObservationController {
     @Autowired
     private ObservationService observationService;
+
+    @Autowired
+    private EncounterService encounterService;
 
     @Autowired
     private PatientService patientService;
@@ -39,7 +43,7 @@ public class ObservationController {
 
     @PostMapping("/")
     public ResponseEntity<ObservationDTO> createObservation(@RequestBody CreateObservationDTO createObservationDTO) {
-        Observation observation = new Observation(createObservationDTO.getType(), createObservationDTO.getValue(), patientService.getPatientById(createObservationDTO.getPatientId()));
+        Observation observation = new Observation(createObservationDTO.getType(), createObservationDTO.getValue(), patientService.getPatientById(createObservationDTO.getPatientId()), encounterService.getEncounter(createObservationDTO.getEncounterId()));
         observation = observationService.createObservation(observation);
         ObservationDTO observationDTO = new ObservationDTO(observation.getType(), observation.getValue(), new PatientDTO(observation.getPatient().getId(), observation.getPatient().getFirstName(), observation.getPatient().getLastName(), observation.getPatient().getAge()));
         return ResponseEntity.ok(observationDTO);

@@ -1,13 +1,13 @@
 package com.example.lab1_backend.services;
 
 import com.example.lab1_backend.entities.Encounter;
-import com.example.lab1_backend.entities.Observation;
 import com.example.lab1_backend.entities.Patient;
 import com.example.lab1_backend.repositories.EncounterRepository;
+import com.example.lab1_backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +16,13 @@ public class EncounterServiceImpl implements EncounterService {
     @Autowired
     private EncounterRepository encounterRepository;
 
+    @Autowired
+    private PatientRepository patientRepository;
+
     @Override
-    public Encounter createEncounter(Date visitDate, String encounterDetails, Patient patient) {
-        Encounter encounter = new Encounter(visitDate, encounterDetails, patient);
+    public Encounter createEncounter(LocalDate visitDate, Long patientId) {
+        Optional<Patient> patient = patientRepository.findById(patientId);
+        Encounter encounter = new Encounter(visitDate, patient.get());
         return encounterRepository.save(encounter);
     }
 
